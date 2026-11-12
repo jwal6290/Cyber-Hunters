@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Scan suspicious messages and files with ScamShield AI.">
+    <title>Scanner | ScamShield AI</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </span>
+            <span>ScamShield <span class="logo-ai">AI</span></span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="results.html" class="active">Scanner</a>
+            <a href="history.html">History</a>
+            <a href="learn.html">Learn</a>
+        </nav>
+
+        <a href="results.html" class="nav-button" id="navScanButton">Scan a Message <i class="fa-solid fa-arrow-right"></i></a>
+    </header>
+
+    <main class="page-shell">
+
+        <div class="page-header">
+            <span class="eyebrow" id="pageEyebrow">MESSAGE ANALYSIS</span>
+            <h1 id="pageTitle">Scan a Message or File</h1>
+            <p id="pageSubtitle">Upload a suspicious file or paste a message, and ScamShield AI will check it for scam warning signs.</p>
+        </div>
+
+        <!-- ============ SCAN INPUT ============ -->
+        <section id="scanView" class="panel scan-panel">
+            <p id="notFoundNote" class="inline-alert" hidden>
+                <i class="fa-solid fa-circle-info"></i>
+                That scan couldn't be found — it may have been deleted from your history.
+            </p>
+
+            <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload files to scan">
+                <input type="file" id="fileInput" multiple hidden>
+                <div class="dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                <h3>Drop files here or <span class="link-text">browse</span></h3>
+                <p>Emails (.eml), PDFs, Word documents, screenshots, web pages, text files, archives, and more — up to 15 MB each.</p>
+            </div>
+
+            <ul class="file-list" id="fileList" aria-live="polite"></ul>
+
+            <div class="divider"><span>or paste a message</span></div>
+
+            <label for="messageInput" class="field-label">Message text</label>
+            <textarea id="messageInput" placeholder="Paste a suspicious text message, email, or other content here..."></textarea>
+
+            <div class="examples">
+                <span>Try an example:</span>
+                <button type="button" class="chip" data-example="delivery"><i class="fa-solid fa-envelope"></i> Package delivery</button>
+                <button type="button" class="chip" data-example="bank"><i class="fa-solid fa-building-columns"></i> Bank alert</button>
+                <button type="button" class="chip" data-example="prize"><i class="fa-solid fa-gift"></i> Prize claim</button>
+                <button type="button" class="chip" data-example="safe"><i class="fa-solid fa-cart-shopping"></i> Order shipped</button>
+            </div>
+
+            <div class="scan-footer">
+                <div class="privacy-inline">
+                    <i class="fa-solid fa-lock"></i>
+                    Files are checked right here in your browser and are never uploaded to a server.
+                </div>
+                <button class="primary-button" id="analyzeButton">
+                    Analyze <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <p id="scanStatus" class="scan-status" aria-live="polite"></p>
+        </section>
+
+        <!-- ============ PROGRESS ============ -->
+        <section id="progressView" class="panel progress-panel" hidden>
+            <div class="scan-spinner"><i class="fa-solid fa-shield-halved"></i></div>
+            <h3>Analyzing…</h3>
+            <p id="progressText">Looking for warning signs</p>
+        </section>
+
+        <!-- ============ RESULTS ============ -->
+        <section id="resultView" hidden>
+            <div class="batch-strip" id="batchStrip" hidden></div>
+
+            <div class="panel results-panel">
+                <div class="results-main">
+                    <div class="verdict" id="verdict">
+                        <div class="verdict-icon"><i id="verdictIcon" class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="verdict-text">
+                            <h2 id="verdictTitle">Potential Scam Detected</h2>
+                            <p id="verdictSummary"></p>
+                        </div>
+                        <div class="verdict-score">
+                            <span class="risk-pill" id="riskPill">High Risk</span>
+                            <div class="score-number"><strong id="scoreValue">0</strong>/100</div>
+                            <span class="score-label">Risk Score</span>
+                        </div>
+                    </div>
+
+                    <h3 class="block-title" id="flagsTitle">Why Was This Flagged?</h3>
+                    <ul class="flag-list" id="flagList"></ul>
+
+                    <div class="info-block explanation-block">
+                        <div class="info-icon"><i class="fa-solid fa-robot"></i></div>
+                        <div>
+                            <h3>AI Explanation</h3>
+                            <p id="explanationText"></p>
+                        </div>
+                    </div>
+
+                    <div class="info-block actions-block">
+                        <div class="info-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div>
+                            <h3>Recommended Actions</h3>
+                            <ul id="actionList"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="results-side">
+                    <div class="side-card">
+                        <h3 class="side-title"><i class="fa-regular fa-envelope"></i> <span id="analyzedTitle">Message Analyzed</span></h3>
+                        <div class="file-chip" id="fileChip" hidden></div>
+                        <div class="analyzed-text" id="analyzedText"></div>
+                        <ul class="notes" id="notesList" hidden></ul>
+                        <p class="scan-meta" id="scanMeta"></p>
+                    </div>
+
+                    <div class="side-card">
+                        <h3 class="side-title"><i class="fa-solid fa-circle-info"></i> Risk Level Guide</h3>
+                        <div class="guide-row">
+                            <span class="guide-pill high"><i class="fa-solid fa-triangle-exclamation"></i> High Risk</span>
+                            <p>Strong indicators of a potential scam.</p>
+                        </div>
+                        <div class="guide-row">
+                            <span class="guide-pill medium"><i class="fa-solid fa-triangle-exclamation"></i> Medium Risk</span>
+                            <p>Some suspicious characteristics. Proceed with caution and verify.</p>
+                        </div>
+                        <div class="guide-row">
+                            <span class="guide-pill low"><i class="fa-solid fa-circle-check"></i> Low Risk</span>
+                            <p>No significant warning signs identified. Still be cautious.</p>
+                        </div>
+                    </div>
+
+                    <button class="wide-button solid" id="scanAnotherButton">
+                        <i class="fa-solid fa-rotate-right"></i> Scan Another Message
+                    </button>
+                    <a href="learn.html" class="wide-button outline">
+                        <i class="fa-solid fa-book-open"></i> Learn About Scams
+                    </a>
+                </aside>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="index.html" class="logo footer-logo">
+            <span class="logo-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </span>
+            <span>ScamShield <span class="logo-ai">AI</span></span>
+        </a>
+
+        <p>Think Before You Click. Stay Safe Online.</p>
+
+        <span class="copyright">
+            &copy; 2026 ScamShield AI. Built for a safer digital world.
+        </span>
+    </footer>
+
+    <script src="scanner-engine.js"></script>
+    <script src="results.js"></script>
+</body>
+</html>

@@ -4,27 +4,42 @@ const fileUpload = document.getElementById("fileUpload");
 const fileName = document.getElementById("fileName");
 const scannerStatus = document.getElementById("scannerStatus");
 
-// Display selected screenshot
+// Display selected file(s)
 fileUpload.addEventListener("change", function () {
-    if (fileUpload.files.length > 0) {
-        fileName.textContent = "Selected file: " + fileUpload.files[0].name;
-        scannerStatus.textContent = "";
+    const files = Array.from(fileUpload.files);
+    if (files.length === 1) {
+        fileName.textContent = "Selected file: " + files[0].name;
+    } else if (files.length > 1) {
+        fileName.textContent = "Selected files: " + files.map(function (f) { return f.name; }).join(", ");
+    } else {
+        fileName.textContent = "";
     }
+    scannerStatus.textContent = "";
 });
 
-// Handle message submission
-analyzeButton.addEventListener("click", function () {
+// Analyze the message and/or files, then open the results page
+analyzeButton.addEventListener("click", async function () {
     const message = messageInput.value.trim();
-    const file = fileUpload.files[0];
+    const files = Array.from(fileUpload.files);
 
-    if (!message && !file) {
-        scannerStatus.textContent =
-            "Please enter a message or upload a screenshot first.";
+    if (!message && !files.length) {
+        scannerStatus.textContent = "Please enter a message or upload a file first.";
         return;
     }
 
-    scannerStatus.textContent =
-        "Your submission is ready. Scam analysis will be available once the backend is connected.";
+    analyzeButton.disabled = true;
+    scannerStatus.textContent = "Analyzing…";
+
+    try {
+        const records = await window.ScamShield.scan({ text: message, files: files }, function (msg) {
+            scannerStatus.textContent = msg;
+        });
+        window.location.href = "results.html?ids=" + records.map(function (r) { return r.id; }).join(",");
+    } catch (err) {
+        console.error(err);
+        scannerStatus.textContent = "Something went wrong while scanning. Please try again.";
+        analyzeButton.disabled = false;
+    }
 });
 
 // Clear status when user edits input

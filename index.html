@@ -124,7 +124,7 @@
             <div class="section-heading">
                 <span class="eyebrow">MESSAGE ANALYSIS</span>
                 <h2>Something Doesn't Look Right?</h2>
-                <p>Paste a suspicious message below and let ScamShield help you examine it.</p>
+                <p>Paste a suspicious message or upload a file, and let ScamShield help you examine it.</p>
             </div>
 
             <div class="scanner-card">
@@ -138,10 +138,10 @@
                 <div class="scanner-actions">
                     <label for="fileUpload" class="upload-button">
                         <i class="fa-solid fa-paperclip"></i>
-                        Upload Screenshot
+                        Upload File
                     </label>
 
-                    <input type="file" id="fileUpload" accept="image/*" hidden>
+                    <input type="file" id="fileUpload" multiple hidden>
 
                     <button class="primary-button" id="analyzeButton">
                         Analyze Message <i class="fa-solid fa-arrow-right"></i>
@@ -173,7 +173,7 @@
                     </div>
                     <span class="step-number">01</span>
                     <h3>Submit</h3>
-                    <p>Paste a suspicious message or upload a screenshot for review.</p>
+                    <p>Paste a suspicious message or upload a file or screenshot for review.</p>
                 </article>
 
                 <article class="step-card">
@@ -227,6 +227,7 @@
         </span>
     </footer>
 
+    <script src="scanner-engine.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ScamShield AI helps identify suspicious messages, emails, and links.">
+    <title>ScamShield AI | Think Before You Click</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </span>
+            <span>ScamShield <span class="logo-ai">AI</span></span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="results.html">Scanner</a>
+            <a href="learn.html">Learn</a>
+        </nav>
+
+        <a href="#scanner" class="nav-button">Scan a Message <i class="fa-solid fa-arrow-right"></i></a>
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="eyebrow">
+                    <i class="fa-solid fa-shield-check"></i>
+                    YOUR DIGITAL SAFETY COMPANION
+                </span>
+
+                <h1>Think Before<br>You <span>Click.</span></h1>
+
+                <p class="hero-description">
+                    Not sure if that message is real or a scam?
+                    Let ScamShield AI help you spot suspicious messages,
+                    emails, and links before it's too late.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#scanner" class="primary-button">
+                        Check a Message <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="learn.html" class="secondary-button">
+                        Learn About Scams
+                    </a>
+                </div>
+
+                <div class="trust-note">
+                    <i class="fa-solid fa-lock"></i>
+                    Your safety starts with awareness.
+                </div>
+            </div>
+
+            <!-- Decorative Security Card -->
+            <div class="hero-visual">
+                <div class="visual-glow"></div>
+
+                <div class="security-card">
+                    <div class="security-card-top">
+                        <span class="mini-shield">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </span>
+                        <span class="status-label">
+                            SECURITY ASSISTANT
+                        </span>
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+
+                    <div class="security-main-icon">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </div>
+
+                    <h3>Stay One Step Ahead</h3>
+                    <p>Recognize warning signs before you interact with suspicious messages.</p>
+
+                    <div class="security-feature">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Spot suspicious messages</span>
+                    </div>
+
+                    <div class="security-feature">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Understand potential risks</span>
+                    </div>
+
+                    <div class="security-feature">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Make safer online decisions</span>
+                    </div>
+
+                    <div class="card-bottom">
+                        <span><i class="fa-solid fa-lock"></i> Scam awareness made simple</span>
+                    </div>
+                </div>
+
+                <div class="floating-icon floating-one">
+                    <i class="fa-solid fa-shield-check"></i>
+                </div>
+
+                <div class="floating-icon floating-two">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scanner Section -->
+        <section class="scanner-section" id="scanner">
+            <div class="section-heading">
+                <span class="eyebrow">MESSAGE ANALYSIS</span>
+                <h2>Something Doesn't Look Right?</h2>
+                <p>Paste a suspicious message below and let ScamShield help you examine it.</p>
+            </div>
+
+            <div class="scanner-card">
+                <label for="messageInput">Paste your message here</label>
+
+                <textarea
+                    id="messageInput"
+                    placeholder="Paste a suspicious text message, email, or other content here..."
+                ></textarea>
+
+                <div class="scanner-actions">
+                    <label for="fileUpload" class="upload-button">
+                        <i class="fa-solid fa-paperclip"></i>
+                        Upload Screenshot
+                    </label>
+
+                    <input type="file" id="fileUpload" accept="image/*" hidden>
+
+                    <button class="primary-button" id="analyzeButton">
+                        Analyze Message <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <p id="fileName" class="file-name"></p>
+                <p id="scannerStatus" class="scanner-status" aria-live="polite"></p>
+
+                <div class="privacy-note">
+                    <i class="fa-solid fa-lock"></i>
+                    Be careful not to include passwords or other sensitive personal information.
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="how-section">
+            <div class="section-heading">
+                <span class="eyebrow">SIMPLE. SMART. SECURE.</span>
+                <h2>How ScamShield Works</h2>
+                <p>Three simple steps toward safer online interactions.</p>
+            </div>
+
+            <div class="steps-container">
+                <article class="step-card">
+                    <div class="step-icon">
+                        <i class="fa-solid fa-paste"></i>
+                    </div>
+                    <span class="step-number">01</span>
+                    <h3>Submit</h3>
+                    <p>Paste a suspicious message or upload a screenshot for review.</p>
+                </article>
+
+                <article class="step-card">
+                    <div class="step-icon">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    </div>
+                    <span class="step-number">02</span>
+                    <h3>Analyze</h3>
+                    <p>Our analysis system examines potential warning signs and suspicious patterns.</p>
+                </article>
+
+                <article class="step-card">
+                    <div class="step-icon">
+                        <i class="fa-solid fa-shield-heart"></i>
+                    </div>
+                    <span class="step-number">03</span>
+                    <h3>Stay Protected</h3>
+                    <p>Understand potential risks and learn how to respond safely.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Bottom Call to Action -->
+        <section class="bottom-cta">
+            <div>
+                <span class="eyebrow">STAY INFORMED. STAY PROTECTED.</span>
+                <h2>Don't Let Scams Catch You Off Guard.</h2>
+                <p>Learn how to recognize suspicious messages and protect your digital identity.</p>
+            </div>
+
+            <a href="learn.html" class="cta-button">
+                Explore Safety Tips <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="index.html" class="logo footer-logo">
+            <span class="logo-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </span>
+            <span>ScamShield <span class="logo-ai">AI</span></span>
+        </a>
+
+        <p>Think Before You Click. Stay Safe Online.</p>
+
+        <span class="copyright">
+            &copy; 2026 ScamShield AI. Built for a safer digital world.
+        </span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

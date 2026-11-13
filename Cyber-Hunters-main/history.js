@@ -111,13 +111,22 @@
         make('<i class="fa-solid fa-chevron-right"></i>', page + 1, { aria: "Next page" });
     }
 
-    function removeScan(id) {
-        const removed = S.deleteRecord(id);
-        if (!removed) return;
-        undoData = [removed];
-        showToast("Scan deleted");
-        render();
+   async function removeScan(id) {
+    const removed = S.deleteRecord(id);
+    if (!removed) return;
+
+    undoData = [removed];
+    showToast("Scan deleted");
+    render();
+
+    if (window.ScamShieldFirebase) {
+        try {
+            await window.ScamShieldFirebase.deleteScan(id);
+        } catch (error) {
+            console.error("Could not delete scan from Firestore:", error);
+        }
     }
+}
 
     function showToast(text) {
         $("toastText").textContent = text;
@@ -158,6 +167,11 @@
         showToast("History cleared");
         page = 1;
         render();
+        if (window.ScamShieldFirebase) {
+    window.ScamShieldFirebase.clearScans().catch(function (error) {
+        console.error("Could not clear Firestore history:", error);
+    });
+}
     });
 
     $("searchInput").addEventListener("input", function () { page = 1; render(); });
@@ -168,5 +182,35 @@
         if (e.key === "scamshield-history") render();
     });
 
+       async function loadCloudHistory() {
+        if (!window.ScamShieldFirebase) return;
+
+        try {
+            const cloudRecords = await window.ScamShieldFirebase.getScans();
+
+            const merged = new Map();
+
+            S.getHistory().forEach(function (record) {
+                merged.set(record.id, record);
+            });
+
+            cloudRecords.forEach(function (record) {
+                merged.set(record.id, record);
+            });
+
+            const combinedHistory = Array.from(merged.values()).sort(function (a, b) {
+                return new Date(b.createdAt) - new Date(a.createdAt);
+            });
+
+            S.setHistory(combinedHistory);
+            page = 1;
+            render();
+
+        } catch (error) {
+            console.error("Could not load Firestore history:", error);
+        }
+    }
+
     render();
+    window.addEventListener("load", loadCloudHistory);
 })();

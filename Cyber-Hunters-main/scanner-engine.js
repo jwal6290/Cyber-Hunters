@@ -1151,6 +1151,7 @@ return records;
         analyze: analyze,
         findUrls: findUrls,
         getHistory: getHistory,
+        setHistory: setHistory,
         getRecord: getRecord,
         deleteRecord: deleteRecord,
         restoreRecord: restoreRecord,
